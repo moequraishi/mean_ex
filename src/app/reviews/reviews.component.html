@@ -1,0 +1,23 @@
+<div class="review-wrapper" *ngIf="reviewData">
+  <div class="title">
+    Reviews for {{reviewData[0].title}}
+  </div>
+  <button (click)="deleteReview()" class="btn btn-danger">Delete Movie</button>
+  <br />
+  <table class="table">
+    <thead class="thead-light">
+    <tr>
+      <th scope="col">Reviewer</th>
+      <th scope="col">Stars</th>
+      <th scope="col">Reviews</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let x of reviewData[0].reviews">
+      <td>{{x.name}}</td>
+      <td>{{x.stars}}</td>
+      <td>{{x.content}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,51 @@
+<div class="title">
+  Submit a movie and your review
+</div>
+
+<form action="/new" method="post" class="movie-form">
+  <!-- Name -->
+  <div class="form-group">
+    <mat-form-field class="example-full-width">
+      <input minlength="3" matInput placeholder="Your name:" [(ngModel)]="name"   [formControl]="nameFormControl" [errorStateMatcher]="matcher">
+
+      <mat-error *ngIf="nameFormControl.hasError('required')">
+        Your name is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="nameFormControl.hasError('minlength')">
+        Please enter minimum <strong>3 characters</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <!-- Stars -->
+  <div class="form-group">
+    <mat-form-field>
+      <mat-select placeholder="Stars:" [(ngModel)]="stars" [formControl]="starsFormControl" required>
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let star of starz" [value]="star.value">
+          {{star.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="starsFormControl.hasError('required')">Please select a star rating.</mat-error>
+    </mat-form-field>
+  </div>
+  <!-- Review -->
+  <div class="form-group">
+    <mat-form-field class="example-full-width">
+      <input minlength="3" matInput placeholder="Description:" [(ngModel)]="review"   [formControl]="descFormControl" [errorStateMatcher]="matcher">
+
+      <mat-error *ngIf="descFormControl.hasError('required')">
+        Your review is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="descFormControl.hasError('minlength')">
+        Please enter minimum <strong>3 characters</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Actions -->
+  <div class="btn-box">
+    <button [disabled]="!starsFormControl.valid ||  !descFormControl.valid || !nameFormControl.valid" (click)="newReview()" class="btn btn-primary">Submit</button>
+
+    <button routerLink="/movies/{{movieId}}" class="btn btn-secondary">Cancel</button>
+  </div>
+</form>

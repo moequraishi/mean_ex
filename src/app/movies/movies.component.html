@@ -1,0 +1,25 @@
+<div class="parent-wrapper" *ngIf="route.children.length === 0">
+  <span class="title">Movie List</span>
+  <span class="float-right">
+    <button routerLink="new" class="btn-secondary">Add a new movie</button>
+  </span>
+  <br />
+  <table class="table">
+    <thead class="thead-light">
+    <tr>
+      <th scope="col">Movie Title</th>
+      <th scope="col">Available actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let x of movieData">
+      <th scope="row">{{x.title}}</th>
+      <td>
+        <button routerLink="{{x._id}}" class="btn btn-warning">Read Reviews</button>
+        <button routerLink="{{x._id}}/review" class="btn btn-secondary">Write Review</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<router-outlet></router-outlet>
