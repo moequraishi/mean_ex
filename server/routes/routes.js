@@ -2,12 +2,9 @@ const express = require('express'),
   path = require('path'),
   routes = express.Router(),
   Models = require('../models/model'),
+  assert = require('assert'),
   Movie = Models.Movie,
   Review = Models.Review;
-
-routes.get('/', function(req, res) {
-  res.sendFile('index.html');
-});
 
 // Create
 routes.post('/new', function(req, res) {
@@ -17,12 +14,27 @@ routes.post('/new', function(req, res) {
 
   newMovie.save(function(err, data) {
     if (err) {
-      console.log('There was an error: ', err);
+      // Custom Error messages
+      if (err.errors.title.properties.type === 'minlength') {
+        err.errors.title.message = 'Title must be at least 3 characters.';
+        console.log(err.errors.title.message);
+        // res.json({message: err.errors.title.message});
+      }
     } else {
       newReview.movie = data._id;
       newReview.save(function(saveErr, saveData) {
         if (saveErr) {
-          console.log('Save review error:', saveErr)
+
+          for (var key in saveErr.errors){
+            // Custom Error messages
+            if (saveErr.errors[key].properties.type === 'minlength') {
+              saveErr.errors[key].message = key + ' must be at least 3 characters.';
+              console.log(saveErr.errors[key].message);
+            } else if (saveErr.errors[key].properties.type === 'min') {
+              saveErr.errors[key].message = 'You must select a star rating.';
+            }
+
+          }
         } else {
           console.log('Movie and Review added:', saveData);
           res.status(200).json(saveData);
@@ -47,7 +59,14 @@ routes.post('/review/:id', function(req, res) {
         } else {
           newReview.save(function(saveErr, saveData) {
             if (saveErr) {
-              console.log('There was an error saving', saveErr);
+              // Custom Error messages
+              if (saveErr.errors[key].properties.type === 'minlength') {
+                saveErr.errors[key].message = key + ' must be at least 3 characters.';
+                console.log(saveErr.errors[key].message);
+              } else if (saveErr.errors[key].properties.type === 'min') {
+                saveErr.errors[key].message = 'You must select a star rating.';
+              }
+
             } else {
               console.log('Successfully saved review', saveData);
               res.json({saveData});
@@ -72,11 +91,14 @@ routes.get('/get', function (req, res) {
 });
 
 // Read -> Single Review
-routes.get('/movies/:id', function(req, res) {
+routes.get('/get/movies/:id', function(req, res) {
   Movie.find({_id: req.params.id})
     .populate('reviews')
     .exec(function(err, data){
-      if (err){ console.log('There was an error: ', err) }
+      if (err){
+        console.log('Error code:', err.code);
+        console.log('Error name:', err.name);
+      }
       else { res.status(200).json(data) }
     });
 });

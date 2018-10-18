@@ -23,7 +23,7 @@ export class HttpService {
   }
 
   readReview(id) {
-    return this.http.get('/movies/' + id);
+    return this.http.get('/get/movies/' + id);
   }
 
   // Update

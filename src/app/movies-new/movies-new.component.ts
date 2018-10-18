@@ -33,7 +33,7 @@ export class MoviesNewComponent implements OnInit {
     Validators.required
   ]);
 
-  starsFormControl = new FormControl('', [Validators.required]);
+  starsFormControl = new FormControl('');
   starz = [
     {name: '1 star', value: '1'},
     {name: '2 stars', value: '2'},

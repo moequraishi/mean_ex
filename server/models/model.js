@@ -8,14 +8,14 @@ mongoose.set('useFindAndModify', false);
 const Schema = mongoose.Schema;
 
 const ReviewSchema = new Schema({
-  name: {type: String, minLength: 3},
+  name: {type: String, minlength: 3},
   stars: {type: Number, min: 1, max: 5},
-  content: {type: String, minLength: 3, maxLength: 255},
+  content: {type: String, minlength: 3, maxlength: 255},
   movie: [{type: Schema.Types.ObjectId, ref: 'Movie'}],
 }, {timestamps: true});
 
 const MovieSchema = new Schema({
-  title: {type: String, minLength: 3, required: true},
+  title: {type: String, minlength: 3, required: true},
   reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
 }, {timestamps: true});
 
