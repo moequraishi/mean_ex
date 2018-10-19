@@ -42,7 +42,9 @@ export class MoviesNewComponent implements OnInit {
     {name: '5 stars', value: '5'}
   ];
 
-  constructor(private httpService: HttpService) { }
+  constructor(
+    private httpService: HttpService,
+    private router: Router) { }
 
   ngOnInit() {
   }
@@ -58,7 +60,7 @@ export class MoviesNewComponent implements OnInit {
     const observable = this.httpService.create(data);
     observable.subscribe(returnData => {
       console.log('New movie and review added: ', returnData);
-      window.location.href = '/';
+      this.router.navigate(['/']);
     });
   }
 

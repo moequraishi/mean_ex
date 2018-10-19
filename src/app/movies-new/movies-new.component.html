@@ -6,7 +6,7 @@
   <!-- Movie Title -->
   <div class="form-group">
     <mat-form-field class="example-full-width">
-      <input  matInput placeholder="Movie Title:" [(ngModel)]="movieTitle"   [formControl]="movieTitleControl" [errorStateMatcher]="matcher">
+      <input minlength="3" matInput placeholder="Movie Title:" [(ngModel)]="movieTitle"   [formControl]="movieTitleControl" [errorStateMatcher]="matcher">
 
       <mat-error *ngIf="movieTitleControl.hasError('required')">
         Movie title is <strong>required</strong>
@@ -19,7 +19,7 @@
   <!-- Name -->
   <div class="form-group">
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Your name:" [(ngModel)]="name"   [formControl]="nameFormControl" [errorStateMatcher]="matcher">
+      <input minlength="3" matInput placeholder="Your name:" [(ngModel)]="name"   [formControl]="nameFormControl" [errorStateMatcher]="matcher">
 
       <mat-error *ngIf="nameFormControl.hasError('required')">
         Your name is <strong>required</strong>

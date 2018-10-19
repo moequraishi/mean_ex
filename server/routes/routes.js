@@ -14,26 +14,16 @@ routes.post('/new', function(req, res) {
 
   newMovie.save(function(err, data) {
     if (err) {
-      // Custom Error messages
-      if (err.errors.title.properties.type === 'minlength') {
-        err.errors.title.message = 'Title must be at least 3 characters.';
-        console.log(err.errors.title.message);
-        // res.json({message: err.errors.title.message});
+      // For error scalability using loop to display any error message
+      for (var key in err.errors){
+        console.log('Error:', err.errors[key].message)
       }
     } else {
       newReview.movie = data._id;
       newReview.save(function(saveErr, saveData) {
         if (saveErr) {
-
           for (var key in saveErr.errors){
-            // Custom Error messages
-            if (saveErr.errors[key].properties.type === 'minlength') {
-              saveErr.errors[key].message = key + ' must be at least 3 characters.';
-              console.log(saveErr.errors[key].message);
-            } else if (saveErr.errors[key].properties.type === 'min') {
-              saveErr.errors[key].message = 'You must select a star rating.';
-            }
-
+           console.log('Error:', saveErr.errors[key].message)
           }
         } else {
           console.log('Movie and Review added:', saveData);

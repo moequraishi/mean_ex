@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-reviews',
@@ -13,6 +13,7 @@ export class ReviewsComponent implements OnInit {
 
   constructor(
     private activated: ActivatedRoute,
+    private router: Router,
     private httpService: HttpService) { }
 
   ngOnInit() {
@@ -32,7 +33,7 @@ export class ReviewsComponent implements OnInit {
     const ob = this.httpService.deleteMovie(this.userId);
     ob.subscribe(data => {
       console.log('Deleted review:', data);
-      window.location.href = '/';
+      this.router.navigate(['/']);
     });
   }
 

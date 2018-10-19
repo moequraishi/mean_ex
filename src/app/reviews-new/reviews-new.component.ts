@@ -42,6 +42,7 @@ export class ReviewsNewComponent implements OnInit {
 
   constructor(
     private activated: ActivatedRoute,
+    private router: Router,
     private httpService: HttpService) { }
 
 
@@ -59,7 +60,7 @@ export class ReviewsNewComponent implements OnInit {
     const ob = this.httpService.createReview(this.movieId, reviewData);
     ob.subscribe(data => {
       console.log('Review created: ', data);
-      window.location.href = '/#/movies/' + this.movieId;
+      this.router.navigate(['/movies/' + this.movieId]);
     });
 
   }

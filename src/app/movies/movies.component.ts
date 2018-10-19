@@ -10,7 +10,14 @@ import { HttpService } from '../http.service';
 export class MoviesComponent implements OnInit {
   movieData;
 
-  constructor(public route: ActivatedRoute, private httpService: HttpService) { }
+  constructor(
+    public route: ActivatedRoute,
+    private router: Router,
+    private httpService: HttpService) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    };
+  }
 
   ngOnInit() {
     this.get();
